@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<project>
+    <description>
+        Common functional targets shared across all submodules.
+    </description>
+
+    <import file="${ant.scripts}/build-reports.xml"/>
+    <import file="${ant.scripts}/build-test.xml"/>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <fileset refid="ant-contrib.lib"/>
+        </classpath>
+    </taskdef>
+
+    <target name="--clean">
+        <delete dir="target"/>
+    </target>
+
+    <target name="--compile-init">
+        <available property="should.compile" file="${src}"/>
+        <mkdir dir="${classes}"/>
+    </target>
+
+    <target name="--compile" if="should.compile">
+        <javac srcdir="${src}" destdir="${classes}" classpathref="compile.path" debug="${javac.debug}"
+               source="${javac.source}" target="${javac.target}">
+            <compilerarg value="-Xlint:unchecked"/>
+        </javac>
+    </target>
+
+    <target name="--compile-copy-resources">
+        <copy todir="${classes}">
+            <fileset file="*.properties" />
+            <filterset>
+                <filter token="VERSION" value="${build.version}" />
+                <filter token="VERSION_INFO" value="${build.version.info}" />
+            </filterset>
+        </copy>
+        <!-- copy resources like properties from the src-dir -->
+        <copy todir="${classes}">
+            <fileset dir="${src}" excludes="**/*.java" />
+        </copy>
+    </target>
+
+    <target name="--javadoc-init">
+        <available property="should.javadoc" file="${src}"/>
+        <mkdir dir="${apidocs}"/>
+    </target>
+
+    <target name="--javadoc" if="should.javadoc">
+        <javadoc destdir="${apidocs}" breakiterator="yes" failonerror="true" classpathref="compile.out">
+            <packageset dir="${src}"/>
+        </javadoc>
+    </target>
+
+    <target name="--package-init">
+        <mkdir dir="${dist}"/>
+    </target>
+
+    <target name="--package-jar">
+        <jar destfile="${dist}/${ant.project.name}.jar" duplicate="fail">
+            <fileset dir="${classes}"/>
+            <manifest>
+                <attribute name="Main-Class" value="net.sourceforge.cruisecontrol.gendoc.GenDoc" />
+                <attribute name="Implementation-Version" value="${build.version} ${build.version.info}" />
+            </manifest>
+        </jar>
+    </target>
+</project>

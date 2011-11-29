@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<project>
+    <description>
+        Reporting classpaths.
+    </description>
+
+    <import file="${ant.scripts}/build-dependencies.xml" />
+
+    <path id="compile.path">
+        <fileset refid="cewolf.lib" />
+        <fileset refid="commons-lang.lib" />
+        <fileset refid="commons-logging.lib" />
+        <fileset refid="el-api.lib" />
+        <fileset refid="jcommon.lib" />
+        <fileset refid="jdom.lib" />
+        <fileset refid="jfreechart.lib" />
+        <fileset refid="jsp-api.lib" />
+        <fileset refid="main.lib" />
+        <fileset refid="servlet-api.lib" />
+        <fileset refid="webwork.lib" />
+        <fileset refid="xwork.lib" />
+        <fileset dir="lib" includes="*.jar"/>
+    </path>
+
+    <path id="compile.out">
+        <path refid="compile.path"/>
+        <pathelement location="${classes}"/>
+    </path>
+
+    <path id="run.path">
+        <path refid="compile.out" />
+    </path>
+
+    <path id="test.functional.compile.path">
+        <path refid="compile.out"/>
+        <pathelement location="${project.root}/main/target/test-classes"/>
+        <fileset refid="junit.lib"/>
+    </path>
+
+    <path id="test.unit.compile.path">
+        <path refid="compile.out"/>
+        <pathelement location="${project.root}/main/target/test-classes"/>
+        <fileset refid="junit.lib"/>
+    </path>
+
+    <path id="test.functional.run.path">
+        <path refid="test.functional.compile.path"/>
+        <pathelement location="${test.classes}"/>
+        <path refid="run.path" />
+    </path>
+
+    <path id="test.unit.run.path">
+        <path refid="test.unit.compile.path"/>
+        <pathelement location="${test.classes}"/>
+        <pathelement location="${project.root}/main/target/test-classes"/>
+        <path refid="run.path" />
+    </path>
+
+    <path id="war.libs.path">
+        <path refid="compile.path" />
+        <fileset refid="batik-awt-util.lib"/>
+        <fileset refid="batik-svggen.lib"/>
+        <fileset refid="batik-util.lib"/>
+        <fileset refid="jaxen.lib"/>
+        <fileset refid="mx4j.lib"/>
+        <fileset refid="mx4j-remote.lib"/>
+        <fileset refid="ognl.lib"/>
+        <fileset refid="oscore.lib"/>
+        <fileset refid="saxon.lib"/>
+        <fileset refid="serializer.lib"/>
+        <fileset refid="velocity-dep.lib"/>
+        <fileset refid="webwork.lib"/>
+        <fileset refid="xerces.lib"/>
+        <fileset refid="xml-apis.lib"/>
+    </path>
+</project>

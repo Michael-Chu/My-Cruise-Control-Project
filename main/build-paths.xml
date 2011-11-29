@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<project>
+    <description>
+        Main classpaths.
+    </description>
+
+    <import file="${ant.scripts}/build-dependencies.xml" />
+
+    <path id="compile.path">
+        <fileset refid="activation.lib" />
+        <fileset refid="antprogresslogger.lib" />
+        <fileset refid="aspirin.lib" />
+        <fileset refid="commons-httpclient.lib" />
+        <fileset refid="commons-logging.lib" />
+        <fileset refid="commons-net.lib" />
+        <fileset refid="commons-pool.lib" />
+        <fileset refid="commons-validator.lib" />
+        <fileset refid="dnsjava.lib" />
+        <fileset refid="fast-md5.lib" />
+        <fileset refid="ivy.lib" />
+        <fileset refid="jakarta-oro.lib" />
+        <fileset refid="jdom.lib" />
+        <fileset refid="jetty.lib" />
+        <fileset refid="jetty-util.lib" />
+        <fileset refid="jug.lib" />
+        <fileset refid="log4j.lib" />
+        <fileset refid="mail.lib" />
+        <fileset refid="maven-embedder.lib" />
+        <fileset refid="mx4j.lib" />
+        <fileset refid="mx4j-tools.lib" />
+        <fileset refid="sfee.lib" />
+        <fileset refid="smack.lib" />
+        <fileset refid="twitter4j.lib" />
+        <fileset refid="x10.lib" />
+        <fileset refid="xmlrpc.lib" />
+        <fileset refid="xpp.lib" />
+        <fileset refid="xstream.lib" />
+        <fileset refid="ant.lib" /> <!-- required by net.sourceforge.cruisecontrol.util.DateUtil, for org.apache.tools.ant.util.DateUtils -->
+        <fileset dir="lib" includes="*.jar"/>
+    </path>
+
+    <path id="compile.out">
+        <path refid="compile.path"/>
+        <pathelement location="${classes}"/>
+    </path>
+
+    <path id="run.path">
+        <path refid="compile.out" />
+        <fileset refid="comm.lib" />
+        <fileset refid="commons-codec.lib" />
+        <fileset refid="jaxen.lib" />
+        <fileset refid="xerces.lib" />
+        <fileset refid="ant-launcher.lib" /> <!-- required by net.sourceforge.cruisecontrol.builders.AntScript -->
+    </path>
+
+    <path id="test.functional.compile.path">
+        <path refid="compile.out"/>
+        <fileset refid="junit.lib"/>
+    </path>
+
+    <path id="test.unit.compile.path">
+        <path refid="compile.out"/>
+        <fileset refid="junit.lib"/>
+    </path>
+
+    <path id="test.functional.run.path">
+        <path refid="test.functional.compile.path"/>
+        <pathelement location="${test.classes}"/>
+        <path refid="run.path" />
+        <fileset refid="ant-junit.lib"/>
+    </path>
+
+    <path id="test.unit.run.path">
+        <path refid="test.unit.compile.path"/>
+        <pathelement location="${test.classes}"/>
+        <path refid="run.path" />
+        <fileset refid="ant-junit.lib"/>
+    </path>
+</project>
